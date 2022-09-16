@@ -31,16 +31,15 @@ function presentar() {
 		charData.push(datos1);
 	}
 	charData.sort(function (a, b) {
-		if (a.label > b.label) {
+		if (a.label.split('/')[2] > b.label.split('/')[2]) {
 			return 1;
 		}
-		if (a.label < b.label) {
+		if (a.label.split('/')[2] < b.label.split('/')[2]) {
 			return -1;
 		}
 		// a must be equal to b
 		return 0;
 	});
-	console.log(charData)
 	configFusion(charData);
 }
 

@@ -1,6 +1,3 @@
-import "./style.css";
-import Axios from "axios";
-
 document.querySelector("#app").innerHTML = `
 	<div>
 		<h1>La Granja de Zenon!</h1>
@@ -14,9 +11,13 @@ document.querySelector("#app").innerHTML = `
 `;
 
 const datos = () => {
-	return new Promise((resolve, reject) => {
-		resolve(Axios.get("https://granja-zenon-humedad.herokuapp.com/humedad"));
-	});
+
+	fetch("https://granja-zenon-humedad.herokuapp.com/humedad")
+		.then((res) => res.json())
+		.then((data) => {
+			objeto = data;
+			presentar();
+		});
 };
 
 function presentar() {
@@ -31,10 +32,10 @@ function presentar() {
 		charData.push(datos1);
 	}
 	charData.sort(function (a, b) {
-		if (a.label.split('/')[2] > b.label.split('/')[2]) {
+		if (a.label.split("/")[2] > b.label.split("/")[2]) {
 			return 1;
 		}
-		if (a.label.split('/')[2] < b.label.split('/')[2]) {
+		if (a.label.split("/")[2] < b.label.split("/")[2]) {
 			return -1;
 		}
 		// a must be equal to b
@@ -83,8 +84,5 @@ const boton = document.getElementById("datos");
 let objeto = new Object();
 
 boton.addEventListener("click", () => {
-	datos().then((data) => {
-		objeto = { ...data.data };
-		presentar();
-	});
+	datos();
 });
